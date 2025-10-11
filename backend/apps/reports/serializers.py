@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from .models import Report
+from .models import MedicalReport
 
 class ReportSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Report
+        model = MedicalReport
         fields = "__all__"
-        read_only_fields = ("owner", "extracted_text", "uploaded_at", "status")
+        read_only_fields = ("user","extracted_text","uploaded_at")
