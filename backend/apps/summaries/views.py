@@ -18,6 +18,17 @@ if os.path.exists(MODEL_PATH) and os.path.exists(VECT_PATH):
     _vectorizer = joblib.load(VECT_PATH)
 
 openai.api_key = settings.OPENAI_API_KEY
+class SummaryViewSet(APIView):
+    def post(self, request):
+        text = request.data.get("text", "")
+        response = openai.Completion.create(
+            model="text-davinci-003",
+            prompt=f"Summarize this medical report:\n{text}",
+            max_tokens=200
+        )
+        summary = response['choices'][0]['text'].strip()
+        return Response({"summary": summary})
+
 
 def llm_summarize(text):
     if not settings.OPENAI_API_KEY:
